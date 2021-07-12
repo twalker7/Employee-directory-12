@@ -1,5 +1,13 @@
 # Employee-directory-12
 
+
+## No walkthrough video or README - Resubmission intend!
+
+
+
+
+
+
 GIVEN a command-line application that accepts user input
 WHEN I start the application
 THEN I am presented with the following options:
