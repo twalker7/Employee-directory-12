@@ -1,0 +1,26 @@
+{
+  "name": "Employee-directory-12",
+  "version": "1.0.0",
+  "description": "GIVEN a command-line application that accepts user input WHEN I start the application THEN I am presented with the following options:  view all departments,   view all roles,   view all employees,   add a department,   add a role,   add an employee,   and update an employee role",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twalker7/Employee-directory-12.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/twalker7/Employee-directory-12/issues"
+  },
+  "homepage": "https://github.com/twalker7/Employee-directory-12#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.1.1",
+    "mysql2": "^2.2.5"
+  }
+}
