@@ -85,7 +85,7 @@ const viewAllDepartments = ()=>{
 
 */
 
-
+//view all departments -- chalk and console.table
 const viewAllDepartments = async () => {
   console.log(chalk.yellow.bold(`====================================================================================`));
   console.log(`                              ` + chalk.green.bold(`All Departments:`));
@@ -108,12 +108,27 @@ const viewAllDepartments = async () => {
 
 
 
-const viewAllRoles =()=>{
-  console.log("all roles ");
-  const sql = `SELECT employee_role.id AS id, employee_role.department_id AS `;
-  db.query();
+//view all roles 
+const viewAllRoles = () => {
+  console.log(chalk.yellow.bold(`====================================================================================`));
+  console.log(`                              ` + chalk.green.bold(`All Roles:`));
+  console.log(chalk.yellow.bold(`====================================================================================`));   
+  try{
+    const sql = `SELECT * FROM employee_role`;
+    db.query(sql, (err, res) => {
+      if (err) throw err;
+      res.forEach(role => {
+        console.log(`ID: ${role.id} | Title: ${role.title} | Salary: ${role.salary} | Department ID: ${role.department_id}`);
+      })
+      promptUser();
+    })
+  } catch (err) {
+    console.log(err);
+    promptUser();
+  }
+};  
 
-}
+
 
 
 promptUser();
