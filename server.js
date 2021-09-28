@@ -183,7 +183,7 @@ const addRole = async () => {
         type: 'list',
         choices: departments.map((departmentID) => {
           return {
-            name: departmentID.department_name,
+            name: departmentID.name,
             value: departmentID.id
           }
         }),
@@ -198,7 +198,7 @@ const addRole = async () => {
       };
     }
 
-    let result = await connection.query("INSERT INTO role SET ?", {
+    let result = await db.query("INSERT INTO employee_role SET ?", {
       title: answer.title,
       salary: answer.salary,
       department_id: answer.departmentID
@@ -295,7 +295,7 @@ const updateRole = async () => {
       }
     ]);
 
-    let roles = await connection.query("SELECT * FROM role");
+    let roles = await db.query("SELECT * FROM employee_role");
     let pickRole = await inquirer.prompt([
       {
         name: 'role',
