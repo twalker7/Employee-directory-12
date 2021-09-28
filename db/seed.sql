@@ -1,2 +1,7 @@
-INSERT INTO department
-VALUES()
+INSERT INTO department(department)
+VALUES 
+    ('Sales'), 
+    ('Engineering'), 
+    ('Legal'),
+    ('Finance'),
+    ('Marketing');

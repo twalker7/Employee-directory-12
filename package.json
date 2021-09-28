@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/twalker7/Employee-directory-12#readme",
   "dependencies": {
+    "chalk": "^4.1.2",
     "console.table": "^0.10.0",
+    "dotenv": "^10.0.0",
     "inquirer": "^8.1.1",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.13"
