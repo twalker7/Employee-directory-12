@@ -29,10 +29,10 @@ const db = mysql.createConnection(
     console.log('Connected to the company database.')
   );
 
-
+//menu prompt
 const promptUser = ()=>{
   inquirer.prompt([
-    { type: list,
+    { type: 'list',
       name: "menu",
       message: "what would you like to do?",
       choices: [
@@ -45,6 +45,15 @@ const promptUser = ()=>{
         "Update Employee Role"
       ]
     }
-  
   ])
-}
+  .then((answer)=>{
+    const choice = answer.menu;
+    if(choice === "View All Departments" ){
+      sayThat();
+    }
+  });
+};
+
+const sayThat = ()=> console.log("hello");
+
+promptUser();
