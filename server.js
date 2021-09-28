@@ -3,18 +3,11 @@ const mysql = require('mysql2');
 
 const chalk = require('chalk');
 
-//test/demonstrate .table() functionality 
-console.table([
-  {
-    name: 'foo',
-    age: 10,
-    sex: 'm'
-  }, {
-    name: 'bar',
-    age: 20,
-    sex: 'sausin'
-  }
-]);
+
+const figlet = require('figlet');
+const util = require('util');
+
+
 
 // Connect to the company database
 const db = mysql.createConnection(
@@ -29,9 +22,23 @@ const db = mysql.createConnection(
     console.log('Connected to the company database.')
   );
 
-// intro graphic 
 
 
+//Make all connection queries promises
+db.query = util.promisify(db.query);
+//Connect to database and present title
+db.connect((err) => {
+  if (err) throw err;
+  console.log(chalk.yellow.bold(`====================================================================================`));
+  console.log(``);
+  console.log(chalk.greenBright.bold(figlet.textSync('Employee Tracker')));
+  console.log(``);
+  console.log(`                                                          ` + chalk.greenBright.bold('Created By: Thomas Walker'));
+  console.log(``);
+  console.log(chalk.yellow.bold(`====================================================================================`));
+  //call function to prompt user actions
+  promptUser();
+});
 
 
 //menu prompt
@@ -47,7 +54,8 @@ const promptUser = ()=>{
         "Add Department",
         "Add Role",
         "Add Employee",
-        "Update Employee Role"
+        "Update Employee Role",
+        "Delete Department"
       ]
     }
   ])
@@ -75,6 +83,9 @@ const promptUser = ()=>{
     }
     if(choice === "Update Employee Role" ){
       updateRole();
+    }
+    if(choice === "Delete Department" ){
+      deleteDepartment();
     }
   });
 };
@@ -332,6 +343,35 @@ const updateRole = async () => {
   };
 }
 
+// delete a department  
+const deleteDepartment = async () => {
+  try {
+    let departments = await db.query("SELECT * FROM department");
+    let pickDepartment = await inquirer.prompt([
+      {
+        name: 'department',
+        type: 'list',
+        choices: departments.map((thisDepartment) => {
+          return {
+            name: thisDepartment.department_name,
+            value: thisDepartment.id
+          }
+        }),
+        message: "Pick an existing department to delete:"
+      }
+    ]);
 
+    let result = await db.query(`DELETE FROM department WHERE department.id = ${(pickDepartment.department)}`);
 
-promptUser();
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`                              ` + chalk.green.bold(`Department Deleted:`));
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`Department ID ${(pickDepartment.department)} has been successfully deleted.`);
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    viewAllDepartments();
+
+  }  catch (err) {
+    console.log(err);
+    viewAllDepartments();
+  };
+}
