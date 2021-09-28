@@ -39,10 +39,10 @@ const promptUser = ()=>{
         "View All Departments", 
         "View All Roles", 
         "View All Employees", 
-        "Add a Department",
-        "Add a Role",
-        "Add an Employee",
-        "Update an Employee Role"
+        "Add Department",
+        "Add Role",
+        "Add Employee",
+        "Update Employee Role"
       ]
     }
   
