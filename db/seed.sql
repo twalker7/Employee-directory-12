@@ -1,2 +1,2 @@
-INSERT INTO company
+INSERT INTO department
 VALUES()

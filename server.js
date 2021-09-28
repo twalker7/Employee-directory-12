@@ -12,7 +12,7 @@ console.table([
   }, {
     name: 'bar',
     age: 20,
-    sex: 'f'
+    sex: 'sausin'
   }
 ]);
 
@@ -23,9 +23,28 @@ const db = mysql.createConnection(
       // Your MySQL username,
       user: 'root',
       // Your MySQL password
-      password: '723mysql',
+      password: '777mysql',
       database: 'company'
     },
     console.log('Connected to the company database.')
   );
 
+
+const promptUser = ()=>{
+  inquirer.prompt([
+    { type: list,
+      name: "menu",
+      message: "what would you like to do?"
+      choices: [
+        "View All Departments", 
+        "View All Roles", 
+        "View All Employees", 
+        "Add a Department",
+        "Add a Role",
+        "Add an Employee",
+        "Update an Employee Role"
+      ]
+    }
+  
+  ])
+}
