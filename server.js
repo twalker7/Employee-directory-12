@@ -277,6 +277,56 @@ const addEmployee = async () => {
   };
 }
 
+// update employee role 
+const updateRole = async () => {
+  try {
+    let employees = await connection.query("SELECT * FROM employee");
+    let pickEmployee = await inquirer.prompt([
+      {
+        name: 'employee',
+        type: 'list',
+        choices: employees.map((thisEmployee) => {
+          return {
+            name: thisEmployee.first_name + ' ' + thisEmployee.last_name,
+            value: thisEmployee.id
+          }
+        }),
+        message: "Pick an existing employee to update their role:"
+      }
+    ]);
+
+    let roles = await connection.query("SELECT * FROM role");
+    let pickRole = await inquirer.prompt([
+      {
+        name: 'role',
+        type: 'list',
+        choices: roles.map((thisRole) => {
+          return {
+            name: thisRole.title,
+            value: thisRole.id
+          }
+        }),
+        message: "Pick a new role for this employee:"
+      }
+    ]);
+
+    let result = await connection.query("UPDATE employee SET ? WHERE ?", [
+      {role_id: pickRole.role},
+      {id: pickEmployee.employee}
+    ]);
+
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`                              ` + chalk.green.bold(`Employee Role Updated:`));
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`Employee ID ${(pickEmployee.employee)} has new role ID ${(pickRole.role)}`);
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    viewAllEmployees();
+
+  }  catch (err) {
+    console.log(err);
+    viewAllEmployees();
+  };
+}
 
 
 
