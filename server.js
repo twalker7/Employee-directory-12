@@ -61,31 +61,21 @@ const promptUser = ()=>{
       viewAllEmployees();
     }
     if(choice === "Add Department" ){
-      viewAllDepartments();
+      addDepartment();
     }
     if(choice === "Add Role" ){
-      viewAllDepartments();
+      addRole();
     }
     if(choice === "Add Employee" ){
-      viewAllDepartments();
+      addEmployee();
     }
     if(choice === "Update Employee Role" ){
-      viewAllDepartments();
+      updateRole();
     }
   });
 };
-/*
-const viewAllDepartments = ()=>{
-  console.log("all departments");
-  const sql =   `SELECT * FROM department`;
-  db.query(sql, (err, res)=>{
-    if(err){throw err;}
-  });
-} 
 
-*/
-
-//view all departments -- chalk and console.table
+// view all departments -- chalk and console.table
 const viewAllDepartments = async () => {
   console.log(chalk.yellow.bold(`====================================================================================`));
   console.log(`                              ` + chalk.green.bold(`All Departments:`));
@@ -108,7 +98,7 @@ const viewAllDepartments = async () => {
 
 
 
-//view all roles 
+// view all roles 
 const viewAllRoles = () => {
   console.log(chalk.yellow.bold(`====================================================================================`));
   console.log(`                              ` + chalk.green.bold(`All Roles:`));
@@ -129,7 +119,7 @@ const viewAllRoles = () => {
 };  
 
 
-//view all employees 
+// view all employees 
 const viewAllEmployees = () => {
   console.log(chalk.yellow.bold(`====================================================================================`));
   console.log(`                              ` + chalk.green.bold(`All Employees:`));
@@ -149,5 +139,145 @@ const viewAllEmployees = () => {
     promptUser();
   }
 };  
+
+
+// add a department
+const addDepartment = () => {
+  inquirer.prompt({
+    name: 'department',
+    type: 'input',
+    message: "What name do you want to give this new department?"
+  })
+  .then(function(answer) {
+    const sql = `INSERT INTO department (name) VALUES (?)`;
+    db.query(sql, answer.department, function(err, res) {
+      if (err) throw err;
+      console.log(chalk.yellow.bold(`====================================================================================`));
+      console.log(`                              ` + chalk.green.bold(`New Department Added:`));
+      console.log(chalk.yellow.bold(`====================================================================================`));
+      console.log(`${(answer.department).toUpperCase()}.`);
+      console.log(chalk.yellow.bold(`====================================================================================`));
+      viewAllDepartments();
+    })
+  })
+}
+
+//add role 
+
+const addRole = async () => {
+  try {
+    let departments = await db.query("SELECT * FROM department");
+    let answer = await inquirer.prompt([
+      {
+        name: 'title',
+        type: 'input',
+        message: "What is the new role's title?"
+      },
+      {
+        name: 'salary',
+        type: 'input',
+        message: "What is the new role's salary?"
+      },
+      {
+        name: 'departmentID',
+        type: 'list',
+        choices: departments.map((departmentID) => {
+          return {
+            name: departmentID.department_name,
+            value: departmentID.id
+          }
+        }),
+        message: "Pick a department to oversee this role:",
+      }
+    ]);
+
+    let pickedDept;
+    for (i = 0; i < departments.length; i++){
+      if (departments[i].department_id === answer.choice) {
+        pickedDept = departments[i];
+      };
+    }
+
+    let result = await connection.query("INSERT INTO role SET ?", {
+      title: answer.title,
+      salary: answer.salary,
+      department_id: answer.departmentID
+    })
+
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`                              ` + chalk.green.bold(`New Role Added:`));
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`${(answer.title)}`);
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    viewAllRoles();
+  }  catch (err) {
+    console.log(err);
+    viewAllRoles();
+  };
+}
+
+
+// add an employee 
+const addEmployee = async () => {
+  try {
+    let managers = await db.query("SELECT * FROM employee");
+    let roles = await db.query("SELECT * FROM employee_role");
+    let answer = await inquirer.prompt([
+      {
+        name: 'firstName',
+        type: 'input',
+        message: "What is the new employee's first name?"
+      },
+      {
+        name: 'lastName',
+        type: 'input',
+        message: "What is the new employee's last name?"
+      },
+      {
+        name: 'employeeRoleID',
+        type: 'list',
+        choices: roles.map((employeeRoleID) => {
+          return {
+            name: employeeRoleID.title,
+            value: employeeRoleID.id
+          }
+        }),
+        message: "Pick this new employee's role ID:",
+      },
+      {
+        name: 'employeeManagerID',
+        type: 'list',
+        choices: managers.map((employeeManagerID) => {
+          return {
+            name: employeeManagerID.first_name + ' ' + employeeManagerID.last_name,
+            value: employeeManagerID.id
+          }
+        }),
+        message: "Pick a manager to oversee this new employee:",
+      }
+    ]);
+
+    let result = await connection.query("INSERT INTO employee SET ?", {
+      first_name: answer.firstName,
+      last_name: answer.lastName,
+      role_id: (answer.employeeRoleID),
+      manager_id: (answer.employeeManagerID)
+    });
+
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`                              ` + chalk.green.bold(`New Employee Added:`));
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    console.log(`Welcome ${(answer.firstName)} ${(answer.lastName)}!`);
+    console.log(chalk.yellow.bold(`====================================================================================`));
+    viewAllEmployees();
+
+  }  catch (err) {
+    console.log(err);
+    viewAllEmployees();
+  };
+}
+
+
+
 
 promptUser();
