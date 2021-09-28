@@ -49,11 +49,11 @@ const promptUser = ()=>{
   .then((answer)=>{
     const choice = answer.menu;
     if(choice === "View All Departments" ){
-      sayThat();
+      viewAllDepartments();
     }
   });
 };
 
-const sayThat = ()=> console.log("hello");
+const viewAllDepartments = ()=> console.log("hello");
 
 promptUser();
