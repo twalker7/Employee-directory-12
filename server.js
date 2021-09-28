@@ -54,6 +54,18 @@ const promptUser = ()=>{
   });
 };
 
-const viewAllDepartments = ()=> console.log("hello");
+const viewAllDepartments = ()=>{
+  console.log("all departments");
+  const sql =   `SELECT department.id AS id, department.department_name AS department FROM department`;
+  db.query();
+} 
+
+const viewAllRoles =()=>{
+  console.log("all roles ");
+  const sql = ``;
+  db.query();
+
+}
+
 
 promptUser();
