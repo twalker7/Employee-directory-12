@@ -129,6 +129,25 @@ const viewAllRoles = () => {
 };  
 
 
-
+//view all employees 
+const viewAllEmployees = () => {
+  console.log(chalk.yellow.bold(`====================================================================================`));
+  console.log(`                              ` + chalk.green.bold(`All Employees:`));
+  console.log(chalk.yellow.bold(`====================================================================================`));   
+  try{
+    const sql = `SELECT * FROM employee`;
+    db.query(sql, (err, res) => {
+      if (err) throw err;
+      let employeeArr = [];
+      res.forEach(employee => employeeArr.push(employee));
+      console.table(employeeArr);
+      console.log(chalk.yellow.bold(`====================================================================================`));
+      promptUser();
+    });
+  } catch (err) {
+    console.log(err);
+    promptUser();
+  }
+};  
 
 promptUser();
