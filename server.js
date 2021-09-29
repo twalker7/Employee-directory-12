@@ -271,6 +271,7 @@ const addEmployee = async () => {
       {
         name: 'employeeManagerID',
         type: 'list',
+        
         choices: managers.map((employeeManagerID) => {
           return {
             name: employeeManagerID.first_name + ' ' + employeeManagerID.last_name,
@@ -281,7 +282,7 @@ const addEmployee = async () => {
       }
     ]);
 
-    let result = await connection.query("INSERT INTO employee SET ?", {
+    let result = await db.query("INSERT INTO employee SET ?", {
       first_name: answer.firstName,
       last_name: answer.lastName,
       role_id: (answer.employeeRoleID),
@@ -304,7 +305,7 @@ const addEmployee = async () => {
 // update employee role 
 const updateRole = async () => {
   try {
-    let employees = await connection.query("SELECT * FROM employee");
+    let employees = await db.query("SELECT * FROM employee");
     let pickEmployee = await inquirer.prompt([
       {
         name: 'employee',
@@ -334,7 +335,7 @@ const updateRole = async () => {
       }
     ]);
 
-    let result = await connection.query("UPDATE employee SET ? WHERE ?", [
+    let result = await db.query("UPDATE employee SET ? WHERE ?", [
       {role_id: pickRole.role},
       {id: pickEmployee.employee}
     ]);
