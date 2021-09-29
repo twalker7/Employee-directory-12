@@ -6,7 +6,7 @@
 
 ## Description 
 
-This application is based in node.js and is design to provide the user with an HTML page containing details and contact information of their work team. The user inserts data into the Inquirer-power prompt at the command line. This app is a time-saver for employees who want to present a basic employee directory consisting of their teammates.
+This application is run in node.js and is framed by the Inquirer package to interact with a MySQL database. The Database is a model
                 
 
 ## Table of Contents
@@ -15,6 +15,9 @@ This application is based in node.js and is design to provide the user with an H
 * [Usage](#usage)
 * [Credits](#credits)
 * [License](#license)
+* [Contributing](#Contributing)
+* [Contact](#Contact)
+* [Presentation](#Presentation)
 
 
 ## Installation
@@ -58,7 +61,7 @@ No test modules were used in the build process of this application
 
  github.com/twalker7
 
- ## Video Presentation Link
+ ## Presentation
 
  
 
