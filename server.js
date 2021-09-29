@@ -111,7 +111,13 @@ const viewAllDepartments = async () => {
   }
 };  
 
+/* 
 
+
+   res.forEach(role => {
+        console.log(`ID: ${role.id} | Title: ${role.title} | Salary: ${role.salary} | Department ID: ${role.department_id}`);
+      })
+*/
 
 // view all roles 
 const viewAllRoles = () => {
@@ -122,9 +128,12 @@ const viewAllRoles = () => {
     const sql = `SELECT * FROM employee_role`;
     db.query(sql, (err, res) => {
       if (err) throw err;
-      res.forEach(role => {
-        console.log(`ID: ${role.id} | Title: ${role.title} | Salary: ${role.salary} | Department ID: ${role.department_id}`);
-      })
+
+      let roleArr = [];
+      res.forEach(role => roleArr.push(role));
+      console.table(roleArr);
+        console.log(chalk.yellow.bold(`====================================================================================`));
+      
       promptUser();
     })
   } catch (err) {

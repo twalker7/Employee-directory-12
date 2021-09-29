@@ -19,7 +19,7 @@ CREATE TABLE employee(
     first_name VARCHAR(30),
     last_name VARCHAR(30),
     role_id INT REFERENCES employee_role(id),
-    manager_id INT, REFERENCES employee(id)
+    manager_id INT REFERENCES employee(id)
 )
 
 
