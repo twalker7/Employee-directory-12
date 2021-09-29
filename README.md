@@ -34,7 +34,7 @@ This application is run in node.js and is framed by the Inquirer package to inte
 
 ## Usage 
 
-Start this app by Opening the command line and executing ' npm start' or 'node server' 
+Start this app by Opening the command line and executing ' npm start' or 'node server.' 
 The User will then receive a menu prompt. 
 Follow the directions of each prompt object to navigate the application and receive a graphical response in the terminal window
 
@@ -62,7 +62,8 @@ No test modules were used in the build process of this application
  github.com/twalker7
 
  ## Presentation
-
+ ### Attached is a link to video presentation for this application:
+https://watch.screencastify.com/v/KaaPFlaU8bf3QTtK0WLO
  
 
 
